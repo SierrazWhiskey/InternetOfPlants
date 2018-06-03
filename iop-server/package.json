@@ -1,0 +1,34 @@
+{
+  "name": "iop-server",
+  "version": "1.0.0",
+  "description": "Server-side application for IoP data",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SierrazWhiskey/InternetOfPlants.git"
+  },
+  "keywords": [
+    "iot",
+    "mbed",
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "Sandra Witzen and Nick Sweet",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SierrazWhiskey/InternetOfPlants/issues"
+  },
+  "homepage": "https://github.com/SierrazWhiskey/InternetOfPlants#readme",
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "grunt": "^1.0.2",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.0"
+  }
+}
