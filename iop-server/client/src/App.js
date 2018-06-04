@@ -15,6 +15,16 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import './App.css';
 
+import {XYPlot,
+        XAxis,
+        YAxis,
+        HorizontalGridLines,
+        VerticalGridLines,
+        LineSeries,
+        DiscreteColorLegend} from 'react-vis';
+
+const MSEC_DAILY = 86400000;
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -82,13 +92,13 @@ function DeviceInfo(props) {
   return (
     <Table className={classes.deviceInfoTable}>
       <TableBody>
-        <TableRow key={device.id}>
+        <TableRow>
           <TableCell component="th" scope="row">
           id
           </TableCell>
           <TableCell numeric>{device.id}</TableCell>
         </TableRow>
-        <TableRow key={device.id}>
+        <TableRow>
           <TableCell component="th" scope="row">
           Last Update
           </TableCell>
@@ -104,10 +114,47 @@ function DeviceInfo(props) {
 function DeviceGraph(props) {
   var device = props.device;
   var classes = props.classes;
+  const timestamp = new Date('September 9 2017').getTime();
+
   return (
-    <Typography component="p">
-      DATA GRAPH
-    </Typography>
+    <XYPlot width={400} height={200} xType="time" style={{marginBottom:-14}}>
+        <DiscreteColorLegend orientation="horizontal"
+         items={['temperature', 'humidity']}/>
+
+         <HorizontalGridLines style={{stroke: '#B7E9ED'}}/>
+         <VerticalGridLines style={{stroke: '#B7E9ED'}}/>
+         <XAxis title="Day" tickTotal={4} style={{
+           line: {stroke: '#ADDDE1'},
+           ticks: {stroke: '#ADDDE1'},
+           text: {stroke: 'none', fill: '#6b6b76', fontWeight: 300, fontSize:12}
+         }}/>
+         <YAxis title="Measurement"/>
+         <LineSeries
+           className="temperature"
+           data={[
+             {x: timestamp + MSEC_DAILY, y: 3},
+             {x: timestamp + MSEC_DAILY * 2, y: 5},
+             {x: timestamp + MSEC_DAILY * 3, y: 15},
+             {x: timestamp + MSEC_DAILY * 4, y: 12}
+           ]}
+           style={{
+             strokeLinejoin: 'round',
+             strokeWidth: 4
+           }}
+         />
+         <LineSeries
+           className="humidity"
+           curve={'curveMonotoneX'}
+           strokeDasharray="3 4"
+           data={[
+             {x: timestamp + MSEC_DAILY, y: 10},
+             {x: timestamp + MSEC_DAILY * 2, y: 4},
+             {x: timestamp + MSEC_DAILY * 3, y: 2},
+             {x: timestamp + MSEC_DAILY * 4, y: 15}
+           ]}
+           strokeDasharray="7, 3"
+           />
+    </XYPlot>
   )
 }
 
@@ -116,7 +163,7 @@ function DeviceCard(props) {
   var classes = props.classes;
 
   return (
-  <div key={device.id} id={"device" + device.id}>
+  <div id={"device" + device.id}>
     <Card className={classes.card}>
       <CardContent>
         <Typography className={classes.title} variant="headline" component="h2">
@@ -124,15 +171,13 @@ function DeviceCard(props) {
           <OnlineChip device={device} classes={classes}/>
         </Typography>
 
-        <Grid container className={classes.deviceRow} justify="center" spacing={20}>
-          <Grid item xs={12} sm={3}>
-
+        <Grid container className={classes.deviceRow} justify="center" spacing={24}>
+          <Grid item xs={12} sm={4}>
             <DeviceInfo device={device} classes={classes}/>
           </Grid>
 
-          <Grid item xs={12} sm={9}>
-
-            <DeviceGraph device={device} classes={classes}/>
+          <Grid item xs={12} sm={8}>
+            <DeviceGraph device={device} classes={classes} />
           </Grid>
 
         </Grid>
@@ -163,9 +208,9 @@ class App extends Component {
          <MuiThemeProvider theme={theme}>
 
          <h1>Devices</h1>
-           <Grid container className={classes.deviceRow} justify="center" spacing={20}>
+           <Grid container className={classes.deviceRow} justify="center" spacing={24}>
              {this.state.devices.map(device =>
-              <Grid item xs={12}>
+              <Grid item xs={12} key={"deviceCard" + device.id}>
               <DeviceCard  device={device} classes={classes}/>
               </Grid>
            )}
