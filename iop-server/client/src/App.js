@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import CssBaseline from '@material-ui/core/CssBaseline';
+
+import DevicePage from './components/DevicePage'
+import DevicesPage from './components/DevicesPage'
 import './App.css';
-import DeviceCard from './components/DeviceCard'
 
 const theme = createMuiTheme({
   palette: {
@@ -29,33 +32,32 @@ const styles = {
 };
 
 class App extends Component {
-  state = {devices: []};
-
-   componentDidMount() {
-     fetch('/devices')
-       .then(res => res.json())
-       .then(devices => this.setState({ devices }));
-   }
 
    render() {
-     var classes = this.props.classes;
+     const classes = this.props.classes;
      return (
-       <div className="App">
-         <CssBaseline />
-         <MuiThemeProvider theme={theme}>
+       <Router>
+         <div className="App">
+           <CssBaseline />
+           <MuiThemeProvider theme={theme}>
 
-         <h1>Devices</h1>
-           <Grid container className={classes.deviceRow} justify="center" spacing={24}>
-             {this.state.devices.map(device =>
-              <Grid item xs={12} key={"deviceCard" + device.id}>
-              <DeviceCard  device={device} classes={classes}/>
-              </Grid>
-           )}
-        </Grid>
-       </MuiThemeProvider>
-     </div>
+           <Route exact={true} path="/" render={() => (
+             <DevicesPage classes={classes} />
+           )}/>
+
+           <Route exact={true} path="/devices" render={() => (
+             <DevicesPage classes={classes} />
+           )}/>
+
+           <Route exact={true} path="/devices/:deviceId" render={(props) => (
+             <DevicePage classes={classes} {...props}/>
+           )}/>
+         </MuiThemeProvider>
+       </div>
+     </Router>
      );
    }
 }
+
 
 export default withStyles(styles)(App);

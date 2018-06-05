@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
 import { createMuiTheme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
@@ -166,6 +166,10 @@ class DeviceCard extends Component {
   render () {
     const classes = this.state.classes;
     const device = this.state.device;
+    if (!device) {
+        return <div />
+    }
+    
     return (
     <div>
       <Card className={classes.card}>
@@ -176,7 +180,10 @@ class DeviceCard extends Component {
                 {device.nicename}
               </Typography>
               <DeviceInfo device={device} classes={classes}/>
-              <Button size="small" color="primary" className={classes.moreButton} >
+              <Button
+                component={Link}
+                to={"/devices/" + device.id}
+                size="small" color="primary" className={classes.moreButton}>
                 View Raw Data
               </Button>
             </Grid>
