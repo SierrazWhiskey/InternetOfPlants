@@ -28,16 +28,10 @@ const MSEC_DAILY = 86400000;
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: '#61ffc8',
-      main: '#08ce97',
-      dark: '#009c69',
-      contrastText: '#000000',
+      main: '#69f0ae',
     },
     secondary: {
-      light: '#ffbdff',
-      main: '#ff8bd6',
-      dark: '#ca5aa5',
-      contrastText: '#000000',
+      main: '#f069ab',
     },
   },
 });
@@ -69,7 +63,7 @@ const styles = {
   },
   online: {
     float: 'right',
-    backgroundColor: '#08ce97',
+    backgroundColor: theme.palette.primary.main,
   },
   offline: {
     float: 'right',
@@ -192,7 +186,7 @@ function DeviceCard(props) {
 }
 
 class App extends Component {
-  state = {devices: []}
+  state = {devices: []};
 
    componentDidMount() {
      fetch('/devices')

@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
        return ((this.getHours() < 10)?"0":"") + this.getHours() +":"+ ((this.getMinutes() < 10)?"0":"") + this.getMinutes() +":"+ ((this.getSeconds() < 10)?"0":"") + this.getSeconds();
   }
   now = "" + new Date().today() + " " + new Date().timeNow();
-  console.log(now);
+  
   res.json([
     {id:1, last_update: now, nicename:"Spider Plant Monitor", online: true},
     {id:2, last_update: now, nicename:"English Ivy Monitor", online: false}
