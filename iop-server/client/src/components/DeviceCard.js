@@ -13,7 +13,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 
-import {XYPlot,
+import {FlexibleXYPlot,
         XAxis,
         YAxis,
         HorizontalGridLines,
@@ -48,7 +48,10 @@ const styles = {
     maxWidth: 800,
     margin: '0px 20px',
     marginLeft  : 'auto',
-    marginRight : 'auto'
+    marginRight : 'auto',
+  },
+  cardContent: {
+    height: '20vw'
   },
   title: {
     marginBottom: 8,
@@ -57,14 +60,16 @@ const styles = {
   deviceInfoTable: {
     marginTop: 0,
     paddingTop: 0
-
+  },
+  moreButton: {
+    marginTop: 20,
   },
   online: {
-    float: 'right',
+    float: 'left',
     backgroundColor: theme.palette.primary.main,
   },
   offline: {
-    float: 'right',
+    float: 'left',
   },
 };
 
@@ -85,9 +90,11 @@ function DeviceInfo(props) {
       <TableBody>
         <TableRow>
           <TableCell component="th" scope="row">
-          id
+          Status
           </TableCell>
-          <TableCell numeric>{device.id}</TableCell>
+          <TableCell>
+          <OnlineChip device={device} classes={classes}/>
+          </TableCell>
         </TableRow>
         <TableRow>
           <TableCell component="th" scope="row">
@@ -106,7 +113,7 @@ function DeviceGraph(props) {
   const timestamp = new Date('September 9 2017').getTime();
 
   return (
-    <XYPlot width={400} height={200} xType="time" style={{marginBottom:-14}}>
+    <FlexibleXYPlot xType="time" style={{marginBottom:-14}}>
         <DiscreteColorLegend orientation="horizontal"
          items={['temperature', 'humidity']}/>
 
@@ -142,7 +149,7 @@ function DeviceGraph(props) {
              {x: timestamp + MSEC_DAILY * 4, y: 15}
            ]}
            />
-    </XYPlot>
+    </FlexibleXYPlot>
   )
 }
 
@@ -160,29 +167,25 @@ class DeviceCard extends Component {
     const classes = this.state.classes;
     const device = this.state.device;
     return (
-    <div id={"device" + device.id}>
+    <div>
       <Card className={classes.card}>
         <CardContent>
-          <Typography className={classes.title} variant="headline" component="h2">
-            {device.nicename}
-            <OnlineChip device={device} classes={classes}/>
-          </Typography>
-
           <Grid container className={classes.deviceRow} justify="center" spacing={24}>
-            <Grid item xs={12} sm={4}>
+            <Grid item className={classes.cardContent} xs={12} sm={4}>
+              <Typography className={classes.title} variant="headline" component="h2">
+                {device.nicename}
+              </Typography>
               <DeviceInfo device={device} classes={classes}/>
+              <Button size="small" color="primary" className={classes.moreButton} >
+                View Raw Data
+              </Button>
             </Grid>
 
             <Grid item xs={12} sm={8}>
               <DeviceGraph device={device} classes={classes} />
             </Grid>
-
           </Grid>
-
         </CardContent>
-        <CardActions>
-          <Button size="small" color="primary" style={{flex: 4}} >View Raw Data</Button>
-        </CardActions>
       </Card>
     </div>
     )
