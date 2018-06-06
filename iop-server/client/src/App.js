@@ -24,11 +24,6 @@ const styles = {
   root: {
     flexGrow: 1,
   },
-  deviceRow: {
-    padding: theme.spacing.unit * 1,
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
 };
 
 class App extends Component {
@@ -65,7 +60,5 @@ class App extends Component {
      );
    }
 }
-
-
 
 export default withStyles(styles)(App);
