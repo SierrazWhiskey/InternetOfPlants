@@ -121,13 +121,12 @@ const styles = theme => ({
   },
 });
 
-function ListItemComposition(props) {
+function NavigationList(props) {
   const { classes } = props;
 
   return (
-    <Paper>
       <MenuList>
-      <Link to="/">
+        <Link to="/" style={{ textDecoration: 'none', display: 'block' }}>
         <MenuItem className={classes.menuItem}>
           <ListItemIcon className={classes.icon}>
             <ShowChartIcon />
@@ -135,7 +134,7 @@ function ListItemComposition(props) {
           <ListItemText classes={{ primary: classes.primary }} inset primary="Overview" />
         </MenuItem>
         </Link>
-        <Link to="/devices">
+        <Link to="/devices" style={{ textDecoration: 'none', display: 'block' }}>
         <MenuItem className={classes.menuItem}>
           <ListItemIcon className={classes.icon}>
             <SpaIcon />
@@ -144,11 +143,10 @@ function ListItemComposition(props) {
         </MenuItem>
         </Link>
       </MenuList>
-    </Paper>
   );
 }
 
-ListItemComposition.propTypes = {
+NavigationList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
@@ -195,8 +193,7 @@ class PersistentDrawer extends React.Component {
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </div>
-        <ListItemComposition classes={classes} />
-        <Divider />
+        <NavigationList classes={classes} />
       </Drawer>
     );
 

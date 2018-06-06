@@ -45,7 +45,7 @@ const styles = {
   },
   card: {
     minWidth: 275,
-    maxWidth: 800,
+    width: '60vw',
     margin: '0px 20px',
     marginLeft  : 'auto',
     marginRight : 'auto',
@@ -169,7 +169,7 @@ class DeviceCard extends Component {
     if (!device) {
         return <div />
     }
-    
+
     return (
     <div>
       <Card className={classes.card}>
